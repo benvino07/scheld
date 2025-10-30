@@ -28,18 +28,20 @@
       place-items: center;
     }
 
-    .wrap{ width: min(900px, 90vw); }
+    .wrap{ width: min(880px, 92vw); }
 
     .grid{
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      grid-template-columns: repeat(2, minmax(180px, 1fr));
+      justify-content: center;
+      gap: 18px;
     }
-    @media (max-width: 720px){ .grid{ grid-template-columns: 1fr; } }
-
-    .card{
+    @media (max-width: 720px){
+      .grid{ grid-template-columns: 1fr; }
+      .card{
       position: relative;
       aspect-ratio: 1 / 1;
+      width: min(28vw, 260px); /* deutlich kleiner */
       border-radius: var(--radius);
       border: 2px solid transparent;
       display: grid;
@@ -50,7 +52,7 @@
       box-shadow: var(--shadow);
       transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
       will-change: transform;
-      overflow: visible; /* damit Avatar überragt */
+      overflow: visible; /* Avatar darf überragen */
     }
 
     .card:hover{ box-shadow: var(--shadow-pressed); }
@@ -59,13 +61,13 @@
     .inner{
       display: grid;
       place-items: center;
-      gap: 14px;
-      padding-top: 8%; /* Platz, weil Avatar oben über den Rand ragt */
+      gap: 10px;
+      padding-top: 10%;
     }
 
     .avatar{
-      width: clamp(78px, 16vw, 125px);
-      height: clamp(78px, 16vw, 125px);
+      width: 58%; /* Bild deutlich größer relativ zur Kachel */
+      aspect-ratio: 1;
       border-radius: 999px;
       object-fit: cover;
       border: 2px solid rgba(0,0,0,0.08);
@@ -75,12 +77,12 @@
 
     /* Avatar leicht über dem Rand "schweben" lassen */
     .avatar.float{
-      margin-top: -10%;
-      outline: 8px solid var(--bg); /* weißer Ring, trennt vom Rand */
+      margin-top: -12%; /* ragt etwas stärker heraus */
+      outline: 8px solid var(--bg);
     }
 
     .label{
-      font-size: clamp(22px, 5vw, 48px);
+      font-size: clamp(18px, 3.2vw, 36px); /* geringere Schrift, kompakter */
       font-weight: 700;
       letter-spacing: 0.4px;
     }
@@ -121,7 +123,7 @@
       <!-- Linke Kachel: Stella (blauer Rand) -->
       <a class="card stella" href="https://www.linkedin.com/in/stella-scheld/" target="_blank" rel="noopener"$1>
         <div class="inner">
-          <img class="avatar float" src="scheld/assets/stella.jpg" alt="Profilbild von Stella" />
+          <img class="avatar float" src="assets/stella.jpg" alt="Profilbild von Stella" />
           <div class="label">Stella</div>
         </div>
       </a>
@@ -129,7 +131,7 @@
       <!-- Rechte Kachel: Benedikt (gelber Rand) -->
       <a class="card benedikt" href="https://www.linkedin.com/in/scheld/" target="_blank" rel="noopener"$1>
         <div class="inner">
-          <img class="avatar float" src="scheld/assets/benedikt.jpg" alt="Profilbild von Benedikt" />
+          <img class="avatar float" src="assets/benedikt.jpg" alt="Profilbild von Benedikt" />
           <div class="label">Benedikt</div>
         </div>
       </a>
