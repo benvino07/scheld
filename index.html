@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stella & Benedikt</title>
+  <meta name="description" content="Zwei Kacheln, die auf unsere LinkedIn-Profile verlinken." />
+  <style>
+    :root{
+      --bg: #ffffff;
+      --fg: #111111;
+      --muted: #666666;
+      --blue: #1e90ff;
+      --yellow: #ffd000;
+      --shadow: 0 6px 20px rgba(0,0,0,0.08);
+      --shadow-pressed: 0 10px 24px rgba(0,0,0,0.12);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background: var(--bg);
+      color: var(--fg);
+      display: grid;
+      place-items: center;
+    }
+
+    .wrap{ width: min(900px, 90vw); }
+
+    .grid{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 720px){ .grid{ grid-template-columns: 1fr; } }
+
+    .card{
+      position: relative;
+      aspect-ratio: 1 / 1;
+      border-radius: var(--radius);
+      border: 2px solid transparent;
+      display: grid;
+      place-items: center;
+      text-decoration: none;
+      color: inherit;
+      background: #fff;
+      box-shadow: var(--shadow);
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+      will-change: transform;
+      overflow: visible; /* damit Avatar überragt */
+    }
+
+    .card:hover{ box-shadow: var(--shadow-pressed); }
+    .card.clicked{ transform: scale(0.985); }
+
+    .inner{
+      display: grid;
+      place-items: center;
+      gap: 14px;
+      padding-top: 8%; /* Platz, weil Avatar oben über den Rand ragt */
+    }
+
+    .avatar{
+      width: clamp(78px, 16vw, 125px);
+      height: clamp(78px, 16vw, 125px);
+      border-radius: 999px;
+      object-fit: cover;
+      border: 2px solid rgba(0,0,0,0.08);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.16);
+      display: block;
+    }
+
+    /* Avatar leicht über dem Rand "schweben" lassen */
+    .avatar.float{
+      margin-top: -10%;
+      outline: 8px solid var(--bg); /* weißer Ring, trennt vom Rand */
+    }
+
+    .label{
+      font-size: clamp(22px, 5vw, 48px);
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
+    .stella{ border-color: color-mix(in oklab, var(--blue) 65%, transparent); }
+    .benedikt{ border-color: color-mix(in oklab, var(--yellow) 65%, transparent); }
+
+    @media (prefers-reduced-motion: no-preference){
+      .card:hover{ transform: translateY(-2px); }
+      .card.clicked{ transform: scale(0.985) translateY(0); }
+    }
+
+    /* Fallback-Initiale, falls Bild nicht lädt */
+    .initials{
+      width: clamp(78px, 16vw, 125px);
+      height: clamp(78px, 16vw, 125px);
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      background: #f3f3f3;
+      color: var(--muted);
+      border: 2px solid rgba(0,0,0,0.08);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.16);
+      margin-top: -10%;
+      outline: 8px solid var(--bg);
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap" aria-label="Links zu unseren LinkedIn-Profilen">
+    <section class="grid">
+      <!-- Linke Kachel: Stella (blauer Rand) -->
+      <a class="card stella" href="https://www.linkedin.com/in/stella-scheld/" data-initials="S" aria-label="Öffnet Stellas LinkedIn-Profil">
+        <div class="inner">
+          <img class="avatar float" src="assets/stella.jpg" alt="Profilbild von Stella" />
+          <div class="label">Stella</div>
+        </div>
+      </a>
+
+      <!-- Rechte Kachel: Benedikt (gelber Rand) -->
+      <a class="card benedikt" href="https://www.linkedin.com/in/scheld/" data-initials="B" aria-label="Öffnet Benedikts LinkedIn-Profil">
+        <div class="inner">
+          <img class="avatar float" src="assets/benedikt.jpg" alt="Profilbild von Benedikt" />
+          <div class="label">Benedikt</div>
+        </div>
+      </a>
+    </section>
+  </main>
+
+  <script>
+    function setupInteractiveCard(card){
+      card.addEventListener('click', function(e){
+        e.preventDefault();
+        card.classList.add('clicked');
+        const href = card.getAttribute('href');
+        setTimeout(()=>{ window.location.href = href; }, 140);
+      });
+
+      const img = card.querySelector('.avatar');
+      if(img){
+        img.addEventListener('error', () => {
+          const init = document.createElement('div');
+          init.className = 'initials';
+          init.textContent = (card.dataset.initials || '?').slice(0,1);
+          img.replaceWith(init);
+        }, { once: true });
+      }
+    }
+
+    document.querySelectorAll('.card').forEach(setupInteractiveCard);
+  </script>
+</body>
+</html>
