@@ -17,7 +17,7 @@
       --radius: 18px;
     }
 
-    * { box-sizing: border-box; }
+    *{ box-sizing: border-box; }
     html, body { height: 100%; }
     body{
       margin: 0;
@@ -28,6 +28,9 @@
       place-items: center;
     }
 
+    /* Vorsichtshalber: generelle Bild-Defaults */
+    img{ max-width: 100%; height: auto; display: block; }
+
     .wrap{ width: min(880px, 92vw); }
 
     .grid{
@@ -36,12 +39,17 @@
       justify-content: center;
       gap: 18px;
     }
+
+    /* Mobile: 1 Spalte, Karte 50vw breit ⇒ links/rechts je 25vw Weißraum */
     @media (max-width: 720px){
       .grid{ grid-template-columns: 1fr; }
-      .card{
+      .card{ width: 50vw; margin-inline: auto; }
+    }
+
+    .card{
       position: relative;
-      aspect-ratio: 1 / 1;
-      width: min(28vw, 260px); /* deutlich kleiner */
+      aspect-ratio: 1 / 1;           /* echtes Quadrat */
+      width: clamp(180px, 28vw, 260px); /* deutlich kleiner */
       border-radius: var(--radius);
       border: 2px solid transparent;
       display: grid;
@@ -52,7 +60,7 @@
       box-shadow: var(--shadow);
       transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
       will-change: transform;
-      overflow: visible; /* Avatar darf überragen */
+      overflow: visible;              /* Avatar darf überragen */
     }
 
     .card:hover{ box-shadow: var(--shadow-pressed); }
@@ -62,27 +70,25 @@
       display: grid;
       place-items: center;
       gap: 10px;
-      padding-top: 10%;
+      padding-top: 10%;              /* Platz für überragenden Avatar */
     }
 
     .avatar{
-      width: 58%; /* Bild deutlich größer relativ zur Kachel */
-      aspect-ratio: 1;
-      border-radius: 999px;
-      object-fit: cover;
+      width: 58%;                    /* Bild deutlich größer relativ zur Kachel */
+      aspect-ratio: 1 / 1;
+      border-radius: 999px;          /* rund */
+      object-fit: cover;             /* zuschneiden, kein Verzerren */
       border: 2px solid rgba(0,0,0,0.08);
       box-shadow: 0 6px 18px rgba(0,0,0,0.16);
-      display: block;
     }
 
-    /* Avatar leicht über dem Rand "schweben" lassen */
     .avatar.float{
-      margin-top: -12%; /* ragt etwas stärker heraus */
-      outline: 8px solid var(--bg);
+      margin-top: -12%;              /* ragt oben etwas stärker heraus */
+      outline: 8px solid var(--bg);  /* weißer Ring als Trennung */
     }
 
     .label{
-      font-size: clamp(18px, 3.2vw, 36px); /* geringere Schrift, kompakter */
+      font-size: clamp(18px, 3.2vw, 36px);
       font-weight: 700;
       letter-spacing: 0.4px;
     }
@@ -97,8 +103,8 @@
 
     /* Fallback-Initiale, falls Bild nicht lädt */
     .initials{
-      width: clamp(78px, 16vw, 125px);
-      height: clamp(78px, 16vw, 125px);
+      width: 58%;
+      aspect-ratio: 1 / 1;
       border-radius: 999px;
       display: grid;
       place-items: center;
@@ -107,7 +113,7 @@
       color: var(--muted);
       border: 2px solid rgba(0,0,0,0.08);
       box-shadow: 0 6px 18px rgba(0,0,0,0.16);
-      margin-top: -10%;
+      margin-top: -12%;
       outline: 8px solid var(--bg);
     }
   </style>
