@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Stella & Benedikt</title>
   <meta name="description" content="Links zu Stella Scheld und Benedikt Scheld" />
+  <!-- Open Graph / SEO -->
+  <meta property="og:title" content="Stella & Benedikt" />
+  <meta property="og:description" content="Links zu Stella Scheld und Benedikt Scheld" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
   <style>
     :root{
       --bg: #ffffff;
@@ -28,7 +33,6 @@
       place-items: center;
     }
 
-    /* Vorsichtshalber: generelle Bild-Defaults */
     img{ max-width: 100%; height: auto; display: block; }
 
     .wrap{ width: min(880px, 92vw); }
@@ -40,7 +44,6 @@
       gap: 18px;
     }
 
-    /* Mobile: 1 Spalte, Karte 50vw breit ⇒ links/rechts je 25vw Weißraum */
     @media (max-width: 720px){
       .grid{ grid-template-columns: 1fr; }
       .card{ width: 50vw; margin-inline: auto; }
@@ -48,8 +51,8 @@
 
     .card{
       position: relative;
-      aspect-ratio: 1 / 1;           /* echtes Quadrat */
-      width: clamp(180px, 28vw, 260px); /* deutlich kleiner */
+      aspect-ratio: 1 / 1;
+      width: clamp(180px, 28vw, 260px);
       border-radius: var(--radius);
       border: 2px solid transparent;
       display: grid;
@@ -60,7 +63,7 @@
       box-shadow: var(--shadow);
       transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
       will-change: transform;
-      overflow: visible;              /* Avatar darf überragen */
+      overflow: visible;
     }
 
     .card:hover{ box-shadow: var(--shadow-pressed); }
@@ -70,21 +73,21 @@
       display: grid;
       place-items: center;
       gap: 10px;
-      padding-top: 10%;              /* Platz für überragenden Avatar */
+      padding-top: 10%;
     }
 
     .avatar{
-      width: 58%;                    /* Bild deutlich größer relativ zur Kachel */
+      width: 58%;
       aspect-ratio: 1 / 1;
-      border-radius: 999px;          /* rund */
-      object-fit: cover;             /* zuschneiden, kein Verzerren */
+      border-radius: 999px;
+      object-fit: cover;
       border: 2px solid rgba(0,0,0,0.08);
       box-shadow: 0 6px 18px rgba(0,0,0,0.16);
     }
 
     .avatar.float{
-      margin-top: -12%;              /* ragt oben etwas stärker heraus */
-      outline: 8px solid var(--bg);  /* weißer Ring als Trennung */
+      margin-top: -12%;
+      outline: 8px solid var(--bg);
     }
 
     .label{
@@ -101,7 +104,6 @@
       .card.clicked{ transform: scale(0.985) translateY(0); }
     }
 
-    /* Fallback-Initiale, falls Bild nicht lädt */
     .initials{
       width: 58%;
       aspect-ratio: 1 / 1;
@@ -117,25 +119,18 @@
       outline: 8px solid var(--bg);
     }
   </style>
-  <!-- Open Graph / SEO -->
-  <meta property="og:title" content="Stella & Benedikt" />
-  <meta property="og:description" content="Links zu Stella Scheld und Benedikt Scheld" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary" />
 </head>
 <body>
   <main class="wrap" aria-label="Links zu unseren LinkedIn-Profilen">
     <section class="grid">
-      <!-- Linke Kachel: Stella (blauer Rand) -->
-      <a class="card stella" href="https://www.linkedin.com/in/stella-scheld/" target="_blank" rel="noopener"$1>
+      <a class="card stella" href="https://www.linkedin.com/in/stella-scheld/" onclick="openLinkedIn('stella-scheld'); return false;" target="_blank" rel="noopener" data-initials="S" aria-label="Öffnet Stellas LinkedIn-Profil">
         <div class="inner">
           <img class="avatar float" src="assets/stella.jpg" alt="Profilbild von Stella" />
           <div class="label">Stella</div>
         </div>
       </a>
 
-      <!-- Rechte Kachel: Benedikt (gelber Rand) -->
-      <a class="card benedikt" href="https://www.linkedin.com/in/scheld/" target="_blank" rel="noopener"$1>
+      <a class="card benedikt" href="https://www.linkedin.com/in/scheld/" onclick="openLinkedIn('scheld'); return false;" target="_blank" rel="noopener" data-initials="B" aria-label="Öffnet Benedikts LinkedIn-Profil">
         <div class="inner">
           <img class="avatar float" src="assets/benedikt.jpg" alt="Profilbild von Benedikt" />
           <div class="label">Benedikt</div>
@@ -145,12 +140,18 @@
   </main>
 
   <script>
+    function openLinkedIn(username) {
+      const appLink = `linkedin://in/${username}`;
+      const webLink = `https://www.linkedin.com/in/${username}/`;
+      window.location = appLink;
+      setTimeout(() => {
+        window.open(webLink, '_blank', 'noopener');
+      }, 800);
+    }
+
     function setupInteractiveCard(card){
       card.addEventListener('click', function(e){
-        e.preventDefault();
         card.classList.add('clicked');
-        const href = card.getAttribute('href');
-        setTimeout(()=>{ window.open(href, '_blank', 'noopener'); }, 140);
       });
 
       const img = card.querySelector('.avatar');
