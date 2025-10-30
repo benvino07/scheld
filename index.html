@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Stella & Benedikt</title>
-  <meta name="description" content="Zwei Kacheln, die auf unsere LinkedIn-Profile verlinken." />
+  <meta name="description" content="Links zu Stella Scheld und Benedikt Scheld" />
   <style>
     :root{
       --bg: #ffffff;
@@ -109,12 +109,17 @@
       outline: 8px solid var(--bg);
     }
   </style>
+  <!-- Open Graph / SEO -->
+  <meta property="og:title" content="Stella & Benedikt" />
+  <meta property="og:description" content="Links zu Stella Scheld und Benedikt Scheld" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
 </head>
 <body>
   <main class="wrap" aria-label="Links zu unseren LinkedIn-Profilen">
     <section class="grid">
       <!-- Linke Kachel: Stella (blauer Rand) -->
-      <a class="card stella" href="https://www.linkedin.com/in/stella-scheld/" data-initials="S" aria-label="Öffnet Stellas LinkedIn-Profil">
+      <a class="card stella" href="https://www.linkedin.com/in/stella-scheld/" target="_blank" rel="noopener"$1>
         <div class="inner">
           <img class="avatar float" src="assets/stella.jpg" alt="Profilbild von Stella" />
           <div class="label">Stella</div>
@@ -122,7 +127,7 @@
       </a>
 
       <!-- Rechte Kachel: Benedikt (gelber Rand) -->
-      <a class="card benedikt" href="https://www.linkedin.com/in/scheld/" data-initials="B" aria-label="Öffnet Benedikts LinkedIn-Profil">
+      <a class="card benedikt" href="https://www.linkedin.com/in/scheld/" target="_blank" rel="noopener"$1>
         <div class="inner">
           <img class="avatar float" src="assets/benedikt.jpg" alt="Profilbild von Benedikt" />
           <div class="label">Benedikt</div>
@@ -137,7 +142,7 @@
         e.preventDefault();
         card.classList.add('clicked');
         const href = card.getAttribute('href');
-        setTimeout(()=>{ window.location.href = href; }, 140);
+        setTimeout(()=>{ window.open(href, '_blank', 'noopener'); }, 140);
       });
 
       const img = card.querySelector('.avatar');
